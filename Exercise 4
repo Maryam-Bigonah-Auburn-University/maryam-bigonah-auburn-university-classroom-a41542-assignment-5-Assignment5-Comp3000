@@ -1,0 +1,47 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+using namespace std;
+
+int main() {
+    //Variable and file declared
+    string answers;
+    ifstream file;
+
+    //File opened
+    file.open("answers.txt");
+
+    //Checks if the file opened successfully
+    if (!file.is_open()) {
+        cerr << "Error opening answers.txt" << endl;
+        exit(1);
+    }
+
+    cout << "Ask a question";
+    cout << endl << endl << "Your question:";
+    string question;
+    getline(cin, question);
+
+    while (true) {
+        //Closes and reopens answer.txt when end is reached
+        if (file.eof()) {
+            file.close();
+            file.open("answers.txt");
+        }
+
+        //Pulls answer from the file
+        getline(file, answers, '\n');
+
+        cout << answers << endl;
+
+        cout << endl << "Ask Again or type exit to quit:";
+        cin >> question;
+
+        //Ends program
+        if (question == "exit" || question == "Exit") {
+            cout << endl << "Program Terminated";
+            return 0;
+        }
+    }
+}
