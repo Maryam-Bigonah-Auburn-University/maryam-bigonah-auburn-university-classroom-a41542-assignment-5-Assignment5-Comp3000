@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+#include <sstream>
+
+using namespace std;
+
+// Function definition
+void correction(string& inputString) {
+    int characters = 0;
+
+    //Ends line of input
+    inputString += "\n";
+
+    //Increments for each letter character in the sentence
+    for (int i = 0; i < inputString.length(); i++) {
+
+        //Increments for each letter character in a word
+        if (isalpha(inputString[i])) {
+            characters += 1;
+        }
+        else {
+            //If characters in a word are equal to 4, change the characters
+            if (characters == 4) {
+                //Lower case word becomes love
+                if (islower(inputString[i-4])) {
+                    inputString.replace(i-4, 4, "love");
+                }
+                //Upper case word becomes Love
+                else {
+                    inputString.replace(i-4, 4, "Love");
+                }
+            }
+
+            //Sets character counter to 0
+            characters = 0;
+        }
+    }
+}
+
+int main() {
+    string sentence;
+
+    //Pulls input to sentence
+    cout << "Enter a sentence:" << endl;
+    getline(cin, sentence);
+
+    //Modifies sentence
+    correction(sentence);
+
+    cout << endl << "Modified sentence: " << sentence << endl;
+
+    return 0;
+}
+
