@@ -1,0 +1,58 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <cstdlib>
+#include <algorithm>
+
+using namespace std;
+
+//Function that sorts the values and merges them into file3.txt
+void sortFiles(ifstream& file1, ifstream& file2, ofstream& file3) {
+	// Local variable declarations
+	vector<int> numbers;
+	int value;
+
+	// Reads in data from the input files into the vector
+	while (file1 >> value) {
+		numbers.push_back(value);
+	}
+	while (file2 >> value) {
+		numbers.push_back(value);
+	}
+
+	//Sorts values
+	sort(numbers.begin(), numbers.end());
+
+	// Write the sorted numbers to the output file
+	for (const int& number : numbers) {
+		file3 << number << endl;
+	}
+}
+
+int main() {
+	// Declares file streams
+	ifstream file1, file2;
+	ofstream file3;
+
+	// Opens the file streams
+	file1.open("file1.txt");
+	file2.open("file2.txt");
+	file3.open("file3.txt");
+
+	//Error if file cannot be opened
+	if (!file1.is_open() || !file2.is_open()) {
+		cerr << "Error: Could not open one or both input files." << endl;
+		return 1;
+	}
+	if (file3.fail()) {
+		cerr << "file3 file failed to open. Program terminated." << endl;
+		exit(1);
+	}
+
+	//File values sorted
+	sortFiles(file1, file2, file3);
+
+	cout << "Data from file1.txt and file2.txt have been sorted into file3.txt" << endl;
+
+	return 0;
+}
